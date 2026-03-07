@@ -1,0 +1,27 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Sparky World-RP",
+    "description": "Welcome to Sparky World",
+    "uuid": "a201b14f-4760-4fe0-b819-e0e03b37336d",
+    "min_engine_version": [1, 21, 0],
+    "version": [0, 1, 1]
+  },
+  "modules": [
+    {
+      "description": "resources",
+      "type": "resources",
+      "uuid": "2620df10-cfea-4348-b2b8-5f28fd66b6d1",
+      "version": [0, 1, 1]
+    }
+  ],
+  "metadata": {
+    "authors": ["FénixSpirit"],
+    "product_type": "addon"
+  },
+  "dependencies":[
+    {
+      "uuid": "248c70de-820c-495e-bc84-88f1399eeb15",
+      "version": [0, 1, 1]
+    }]
+}

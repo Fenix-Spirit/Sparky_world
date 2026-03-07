@@ -1,0 +1,10 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.sparky": {
+      "geometry": "Geometry.sparky_geometry",
+      "materials": [{"*": "Material.sparky_material"}],
+      "textures": ["Texture.sparky_texture"]
+    }
+  }
+}

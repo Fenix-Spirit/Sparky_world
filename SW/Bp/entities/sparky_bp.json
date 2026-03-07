@@ -1,0 +1,66 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "sw:sparky",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "spawn_category": "misc"
+    },
+    "components": {
+      "minecraft:physics": {
+        "has_collision": true,
+        "has_gravity": true
+      },
+      "minecraft:type_family": {
+        "family": ["sparky","mob","boss"]
+      },
+      "minecraft:scale": {
+        "value": 0.95
+      },
+      "minecraft:collision_box": {
+        "width": 0.9,
+        "height": 2
+      },
+      "minecraft:attack": {
+        "damage": 5
+      },
+      "minecraft:health": {
+        "value": 500,
+        "max": 500
+      },
+      "minecraft:boss": {
+        "hud_range": 60,
+        "name": "Sparky"
+      },
+      "minecraft:movement": {
+        "value": 0.35
+      },
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "avoid_damage_blocks": true,
+        "can_jump": true,
+        "can_sink": false
+      },
+      "minecraft:movement.basic": {
+        "max_turn":  50.0
+      },
+      "minecraft:jump.static": {
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 3,
+        "look_distance": 10,
+        "min_look_time": 5,
+        "max_look_time": 30,
+        "probability": 0.2
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 1,
+        "interval": 60
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 7
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "sw:sparky",
+      "spawn_egg": {"texture": "sw:sparky_egg"},
+      "textures": {"sparky_texture": "textures/entity/sparky_texture"},
+      "geometry": {"sparky_geometry": "geometry.sparky"},
+      "materials": {"sparky_material": "entity_alphatest"},
+      "render_controllers": ["controller.render.sparky"],
+      "animations": {
+        "walk": "animation.sparky.walk"
+      },
+      "scripts": {
+        "animate": [
+          {"walk": "q.modified_move_speed"}
+        ]
+      },
+      "enable_attachables": true,
+      "held_item_ignores_lighting": true,
+      "hide_armor": true
+    }
+  }
+}
