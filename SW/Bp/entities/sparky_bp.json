@@ -7,13 +7,123 @@
       "is_summonable": true,
       "spawn_category": "misc"
     },
+    "component_groups": {
+      "sw:base_state": {
+        "minecraft:behavior.hurt_by_target": {
+          "priority": 3,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "!=",
+                    "value": "sparky"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "!=",
+                    "value": "creeper"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 4,
+          "must_see": false,
+          "reselect_targets": true,
+          "entity_types": [
+            {
+              "filters": {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "==",
+                "value": "undead"
+              },
+              "max_dist": 32
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "==",
+                    "value": "monster"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "!=",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 32
+            }
+          ]
+        },
+        "minecraft:damage_sensor": {
+          "triggers": {
+            "on_damage": {
+              "filters": {
+                "test": "actor_health",
+                "operator": "<=",
+                "value": 125
+              },
+              "event": "sw:enter_rage",
+              "target": "self"
+            }
+          }
+        }
+      },
+      "sw:rage_state": {
+        "minecraft:movement": {
+          "value": 0.6
+        },
+        "minecraft:attack": {
+          "damage": 10
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 3,
+          "must_see": false,
+          "reselect_targets": true,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "!=",
+                    "value": "sparky"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "!=",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 64
+            }
+          ]
+        },
+        "minecraft:is_sheared": {} 
+      }
+    },
     "components": {
       "minecraft:physics": {
         "has_collision": true,
         "has_gravity": true
       },
       "minecraft:type_family": {
-        "family": ["sparky","mob","boss"]
+        "family": ["sparky", "mob", "boss", "villager"]
       },
       "minecraft:scale": {
         "value": 0.95
@@ -21,6 +131,9 @@
       "minecraft:collision_box": {
         "width": 0.9,
         "height": 2
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/sparky.loot.json"
       },
       "minecraft:attack": {
         "damage": 5
@@ -40,7 +153,7 @@
         "max_turn":  50.0
       },
       "minecraft:jump.static": {
-        "jump_power":0.7
+        "jump_power":0.5
       },
       "minecraft:navigation.walk": {
         "can_path_over_water": true,
@@ -51,23 +164,61 @@
       "minecraft:annotation.open_door":{},
       "minecraft:can_climb":{},
       "minecraft:behavior.look_at_player": {
-        "priority": 3,
+        "priority": 6,
         "look_distance": 10,
         "min_look_time": 5,
         "max_look_time": 30,
         "probability": 0.2
       },
       "minecraft:behavior.random_stroll": {
-        "priority": 3,
+        "priority": 6,
         "interval": 60
       },
       "minecraft:behavior.random_look_around": {
         "priority": 7
       },
-      "minecraft:behavior.delayed_attack":{
-        "attack_duration":0.5,
-        "attack_types":[],
-        "speed_multiplier":1.2,
+      "minecraft:behavior.melee_attack": {
+        "priority": 1,
+        "speed_multiplier": 1.2,
+        "track_target": true
+      },
+      "minecraft:shooter": {
+        "def": "minecraft:snowball"
+      },
+      "minecraft:behavior.ranged_attack": {
+        "priority": 2,
+        "speed_multiplier": 1.2,
+        "attack_interval_min": 1.0,
+        "attack_interval_max": 3.0,
+        "attack_radius": 15.0
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": ["sw:base_state"]
+        }
+      },
+      "sw:enter_rage": {
+        "queue_command": {
+          "command": [
+            "say RAGE MODE ACTIVATED!"
+          ]
+        },
+        "remove": {
+          "component_groups": ["sw:base_state"]
+        },
+        "add": {
+          "component_groups": ["sw:rage_state"]
+        }
+      },
+      "sw:exit_rage": {
+        "remove": {
+          "component_groups": ["sw:rage_state"]
+        },
+        "add": {
+          "component_groups": ["sw:base_state"]
+        }
       }
     }
   }
