@@ -6,7 +6,7 @@
 				"identifier": "geometry.sparky",
 				"texture_width": 64,
 				"texture_height": 64,
-				"visible_bounds_width": 2,
+				"visible_bounds_width": 3,
 				"visible_bounds_height": 3.5,
 				"visible_bounds_offset": [0, 1.25, 0]
 			},
@@ -99,6 +99,14 @@
 					]
 				},
 				{
+					"name": "glove_l",
+					"parent": "hand_l",
+					"pivot": [6, 18, 3],
+					"cubes": [
+						{"origin": [3, 10, -2], "size": [6, 6, 6], "uv": [2, 52]}
+					]
+				},
+				{
 					"name": "arm_r",
 					"parent": "root",
 					"pivot": [-4, 22, 1]
@@ -117,6 +125,14 @@
 					"pivot": [-6, 18, 3],
 					"cubes": [
 						{"origin": [-8, 12, -1], "size": [4, 6, 4], "uv": [32, 0]}
+					]
+				},
+				{
+					"name": "glove_r",
+					"parent": "hand_r",
+					"pivot": [-6, 18, 3],
+					"cubes": [
+						{"origin": [-9, 10, -2], "size": [6, 6, 6], "uv": [2, 52]}
 					]
 				},
 				{
