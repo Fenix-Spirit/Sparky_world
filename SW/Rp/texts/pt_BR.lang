@@ -1,0 +1,9 @@
+pack.name=Sparky World - RP
+pack.description=Recursos do Sparky, o chefe faiscante com coroa.
+entity.sw:sparky.name=Sparky
+entity.sw:spark_bolt.name=Faísca
+item.spawn_egg.entity.sw:sparky.name=Ovo de Spawn do Sparky
+sw.sparky.rage=§6⚡ §eSparky entrou em MODO FÚRIA! §6⚡
+entity.sw:sphere_shot.name=Esfera do Sparky
+entity.sw:trap_sphere.name=Esfera Armadilha
+entity.sw:crush_cage.name=Esfera Esmagadora

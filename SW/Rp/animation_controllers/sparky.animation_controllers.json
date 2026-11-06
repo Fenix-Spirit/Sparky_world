@@ -1,0 +1,190 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.sparky.general": {
+      "initial_state": "calm",
+      "states": {
+        "calm": {
+          "animations": [
+            "idle",
+            {
+              "walk": "q.modified_move_speed"
+            },
+            "look_at_target"
+          ],
+          "transitions": [
+            {
+              "rage": "v.is_rage"
+            }
+          ],
+          "blend_transition": 0.25
+        },
+        "rage": {
+          "animations": [
+            "rage_idle",
+            {
+              "walk": "q.modified_move_speed"
+            },
+            "look_at_target"
+          ],
+          "transitions": [
+            {
+              "calm": "!v.is_rage"
+            }
+          ],
+          "blend_transition": 0.25
+        }
+      }
+    },
+    "controller.animation.sparky.form": {
+      "initial_state": "rings",
+      "states": {
+        "rings": {
+          "animations": ["rings_hold"],
+          "on_entry": ["v.show_spheres = 0;"],
+          "transitions": [
+            {
+              "to_spheres": "v.form == 'to_spheres'"
+            },
+            {
+              "spheres": "v.form == 'spheres'"
+            }
+          ],
+          "blend_transition": 0.15
+        },
+        "to_spheres": {
+          "animations": ["to_spheres"],
+          "transitions": [
+            {
+              "spheres": "v.form == 'spheres'"
+            },
+            {
+              "rings": "v.form == 'rings'"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "spheres": {
+          "animations": ["spheres_hold"],
+          "on_entry": ["v.show_spheres = 1;"],
+          "transitions": [
+            {
+              "to_rings": "v.form == 'to_rings'"
+            },
+            {
+              "rings": "v.form == 'rings'"
+            }
+          ],
+          "blend_transition": 0.15
+        },
+        "to_rings": {
+          "animations": ["to_rings"],
+          "transitions": [
+            {
+              "rings": "v.form == 'rings'"
+            },
+            {
+              "spheres": "v.form == 'spheres'"
+            }
+          ],
+          "blend_transition": 0.1
+        }
+      }
+    },
+    "controller.animation.sparky.attack": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "roar": "q.is_roaring"
+            },
+            {
+              "melee": "q.is_delayed_attacking"
+            },
+            {
+              "shoot_bolt": "q.is_charged && !v.show_spheres"
+            },
+            {
+              "shoot_trap": "q.is_charged && v.show_spheres && v.skill == 'trap'"
+            },
+            {
+              "shoot_throw": "q.is_charged && v.show_spheres"
+            }
+          ]
+        },
+        "roar": {
+          "animations": ["roar"],
+          "particle_effects": [
+            {
+              "effect": "spark_burst",
+              "locator": "crown"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_roaring"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "melee": {
+          "animations": ["punch"],
+          "transitions": [
+            {
+              "default": "!q.is_delayed_attacking"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "shoot_bolt": {
+          "animations": ["charge_bolt"],
+          "particle_effects": [
+            {
+              "effect": "charge",
+              "locator": "spark_r"
+            },
+            {
+              "effect": "charge",
+              "locator": "spark_l"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_charged"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "shoot_throw": {
+          "animations": ["throw"],
+          "transitions": [
+            {
+              "default": "!q.is_charged"
+            }
+          ],
+          "blend_transition": 0.1
+        },
+        "shoot_trap": {
+          "animations": ["trap_cast"],
+          "particle_effects": [
+            {
+              "effect": "charge",
+              "locator": "spark_r"
+            },
+            {
+              "effect": "charge",
+              "locator": "spark_l"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_charged"
+            }
+          ],
+          "blend_transition": 0.1
+        }
+      }
+    }
+  }
+}

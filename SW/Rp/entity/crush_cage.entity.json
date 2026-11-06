@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "sw:crush_cage",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/crush_cage"
+      },
+      "geometry": {
+        "default": "geometry.sw_crush_cage"
+      },
+      "render_controllers": ["controller.render.sw_simple"],
+      "animations": {
+        "life": "animation.sw_crush_cage.life"
+      },
+      "scripts": {
+        "animate": ["life"]
+      },
+      "particle_effects": {
+        "shatter": "sw:spark_burst"
+      },
+      "sound_effects": {
+        "close": "random.anvil_land",
+        "shatter": "random.anvil_break"
+      }
+    }
+  }
+}

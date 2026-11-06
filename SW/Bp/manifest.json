@@ -1,24 +1,26 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Sparky World-BP",
-    "description": "Welcom to Sparky World",
+    "name": "pack.name",
+    "description": "pack.description",
     "uuid": "248c70de-820c-495e-bc84-88f1399eeb15",
-    "min_engine_version": [1, 21, 0],
-    "version": [0, 2, 0]
+    "min_engine_version": [1, 21, 90],
+    "version": [0, 3, 0]
   },
   "modules": [
     {
       "description": "behavior",
       "type": "data",
       "uuid": "01018579-0327-442c-8f64-604c08a534b0",
-      "version": [0, 2, 0]
+      "version": [0, 3, 0]
     }
   ],
-  "dependencies": [{
+  "dependencies": [
+    {
       "uuid": "a201b14f-4760-4fe0-b819-e0e03b37336d",
-      "version": [0, 2, 0]
-    }],
+      "version": [0, 3, 0]
+    }
+  ],
   "metadata": {
     "authors": ["FénixSpirit"],
     "product_type": "addon"

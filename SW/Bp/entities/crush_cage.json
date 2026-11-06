@@ -1,0 +1,84 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "sw:crush_cage",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "sw:gone": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": ["sparky", "inanimate"]
+      },
+      "minecraft:collision_box": {
+        "width": 1.6,
+        "height": 1.6
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:health": {
+        "value": 5,
+        "max": 5
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1.0
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:fire_immune": {},
+      "minecraft:area_attack": {
+        "damage_range": 1.4,
+        "damage_per_tick": 2,
+        "damage_cooldown": 0.4,
+        "cause": "entity_attack",
+        "entity_filter": {
+          "all_of": [
+            {
+              "test": "is_family",
+              "subject": "other",
+              "operator": "!=",
+              "value": "sparky"
+            },
+            {
+              "test": "is_family",
+              "subject": "other",
+              "operator": "!=",
+              "value": "inanimate"
+            }
+          ]
+        }
+      },
+      "minecraft:timer": {
+        "looping": false,
+        "time": 2.45,
+        "time_down_event": {
+          "event": "sw:shatter"
+        }
+      }
+    },
+    "events": {
+      "sw:shatter": {
+        "add": {
+          "component_groups": ["sw:gone"]
+        }
+      }
+    }
+  }
+}

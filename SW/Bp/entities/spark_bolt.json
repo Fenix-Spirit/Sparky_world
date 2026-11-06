@@ -1,0 +1,87 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "sw:spark_bolt",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "sw:expired": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.3,
+        "height": 0.3
+      },
+      "minecraft:projectile": {
+        "anchor": "middle",
+        "offset": [0, 0.6, 0],
+        "power": 1.2,
+        "gravity": 0.0,
+        "inertia": 1.0,
+        "liquid_inertia": 1.0,
+        "uncertainty_base": 6.0,
+        "uncertainty_multiplier": 2.0,
+        "isolated_physics": false,
+        "ignored_entities": ["sw:spark_bolt"],
+        "on_hit": {
+          "impact_damage": {
+            "damage": {
+              "min": 5,
+              "max": 7
+            },
+            "knockback": true,
+            "apply_knockback_to_blocking_targets": true
+          },
+          "mob_effect": {
+            "effects": [
+              {
+                "effect": "slowness",
+                "amplifier": 1,
+                "durationeasy": 20,
+                "durationnormal": 40,
+                "durationhard": 60
+              }
+            ]
+          },
+          "particle_on_hit": {
+            "particle_type": "electricspark",
+            "num_particles": 16,
+            "on_entity_hit": true,
+            "on_other_hit": true
+          },
+          "remove_on_hit": {}
+        }
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:timer": {
+        "looping": false,
+        "time": 8,
+        "time_down_event": {
+          "event": "sw:expire"
+        }
+      },
+      "minecraft:conditional_bandwidth_optimization": {
+        "default_values": {
+          "max_optimized_distance": 80.0,
+          "max_dropped_ticks": 7,
+          "use_motion_prediction_hints": true
+        }
+      }
+    },
+    "events": {
+      "sw:expire": {
+        "add": {
+          "component_groups": ["sw:expired"]
+        }
+      }
+    }
+  }
+}

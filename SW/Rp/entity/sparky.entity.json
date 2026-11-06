@@ -3,18 +3,56 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "sw:sparky",
-      "spawn_egg": {"texture": "sw:sparky_egg"},
-      "textures": {"sparky_texture": "textures/entity/sparky_texture"},
-      "geometry": {"sparky_geometry": "geometry.sparky"},
-      "materials": {"sparky_material": "entity_alphatest"},
+      "spawn_egg": {
+        "texture": "sw:sparky_egg"
+      },
+      "textures": {
+        "default": "textures/entity/sparky_texture",
+        "rage": "textures/entity/sparky_texture_rage"
+      },
+      "geometry": {
+        "default": "geometry.sparky"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
       "render_controllers": ["controller.render.sparky"],
       "animations": {
-        "walk": "animation.sparky.walk"
+        "idle": "animation.sparky.idle",
+        "walk": "animation.sparky.walk",
+        "look_at_target": "animation.sparky.look_at_target",
+        "rings_hold": "animation.sparky.rings_hold",
+        "spheres_hold": "animation.sparky.spheres_hold",
+        "to_spheres": "animation.sparky.to_spheres",
+        "to_rings": "animation.sparky.to_rings",
+        "charge_bolt": "animation.sparky.charge_bolt",
+        "punch": "animation.sparky.punch",
+        "throw": "animation.sparky.throw",
+        "trap_cast": "animation.sparky.trap_cast",
+        "roar": "animation.sparky.roar",
+        "rage_idle": "animation.sparky.rage_idle",
+        "general": "controller.animation.sparky.general",
+        "form": "controller.animation.sparky.form",
+        "attack_controller": "controller.animation.sparky.attack"
       },
       "scripts": {
-        "animate": [
-          {"walk": "q.modified_move_speed"}
-        ]
+        "pre_animation": [
+          "v.show_spheres = v.show_spheres ?? 0;",
+          "v.phase = q.property('sw:phase');",
+          "v.form = q.property('sw:form');",
+          "v.skill = q.property('sw:skill');",
+          "v.is_rage = v.phase == 'rage';",
+          "v.is_transition = v.phase == 'transition';"
+        ],
+        "animate": ["general", "form", "attack_controller"]
+      },
+      "particle_effects": {
+        "spark_burst": "sw:spark_burst",
+        "rage_spark": "sw:rage_spark",
+        "charge": "sw:charge"
+      },
+      "sound_effects": {
+        "transform": "mob.breeze.whirl"
       },
       "enable_attachables": true,
       "held_item_ignores_lighting": true,

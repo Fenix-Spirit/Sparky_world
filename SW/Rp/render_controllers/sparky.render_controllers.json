@@ -2,9 +2,50 @@
   "format_version": "1.10.0",
   "render_controllers": {
     "controller.render.sparky": {
-      "geometry": "Geometry.sparky_geometry",
-      "materials": [{"*": "Material.sparky_material"}],
-      "textures": ["Texture.sparky_texture"]
+      "arrays": {
+        "textures": {
+          "Array.skins": ["Texture.default", "Texture.rage"]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Array.skins[v.is_rage ? 1 : 0]"],
+      "part_visibility": [
+        {
+          "*": true
+        },
+        {
+          "sphere_l": "v.show_spheres"
+        },
+        {
+          "sphere_r": "v.show_spheres"
+        },
+        {
+          "glove_l": "!v.show_spheres"
+        },
+        {
+          "glove_r": "!v.show_spheres"
+        }
+      ],
+      "overlay_color": {
+        "r": "v.is_transition ? 1.0 : this",
+        "g": "v.is_transition ? 0.95 : this",
+        "b": "v.is_transition ? 0.6 : this",
+        "a": "v.is_transition ? math.abs(math.sin(q.life_time * 720)) * 0.7 : this"
+      }
+    },
+    "controller.render.sw_simple": {
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": ["Texture.default"]
     }
   }
 }
