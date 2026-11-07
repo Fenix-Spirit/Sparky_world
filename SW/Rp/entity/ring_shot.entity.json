@@ -1,0 +1,34 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "sw:ring_shot",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/ring_shot"
+      },
+      "geometry": {
+        "default": "geometry.sw_ring_shot"
+      },
+      "render_controllers": [
+        "controller.render.sw_glow"
+      ],
+      "animations": {
+        "flying": "animation.sw_ring_shot.flying"
+      },
+      "scripts": {
+        "animate": [
+          "flying"
+        ],
+        "pre_animation": [
+          "v.fade = q.property('sw:fading') ? (v.fade ?? 0) + q.delta_time : 0;"
+        ]
+      },
+      "particle_effects": {
+        "trail": "sw:charge"
+      }
+    }
+  }
+}

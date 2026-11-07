@@ -4,7 +4,10 @@
     "controller.render.sparky": {
       "arrays": {
         "textures": {
-          "Array.skins": ["Texture.default", "Texture.rage"]
+          "Array.skins": [
+            "Texture.default",
+            "Texture.rage"
+          ]
         }
       },
       "geometry": "Geometry.default",
@@ -13,7 +16,9 @@
           "*": "Material.default"
         }
       ],
-      "textures": ["Array.skins[v.is_rage ? 1 : 0]"],
+      "textures": [
+        "Array.skins[v.is_rage ? 1 : 0]"
+      ],
       "part_visibility": [
         {
           "*": true
@@ -45,7 +50,21 @@
           "*": "Material.default"
         }
       ],
-      "textures": ["Texture.default"]
+      "textures": [
+        "Texture.default"
+      ]
+    },
+    "controller.render.sw_glow": {
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ],
+      "ignore_lighting": true
     }
   }
 }

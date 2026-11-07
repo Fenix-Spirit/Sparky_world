@@ -17,14 +17,24 @@
         "height": 0.4
       },
       "minecraft:projectile": {
-        "anchor": "middle",
-        "offset": [0, 0.4, 0],
-        "power": 1.7,
-        "gravity": 0.04,
+        "anchor": "eye_height",
+        "offset": [
+          0,
+          -0.1,
+          0
+        ],
+        "power": 1.5,
+        "gravity": 0.03,
         "uncertainty_base": 4.0,
         "uncertainty_multiplier": 1.0,
         "isolated_physics": false,
-        "ignored_entities": ["sw:sphere_shot", "sw:spark_bolt", "sw:trap_sphere"],
+        "ignored_entities": [
+          "sw:sphere_shot",
+          "sw:ring_shot",
+          "sw:trap_sphere",
+          "sw:ring_fire",
+          "sw:ring_portal"
+        ],
         "on_hit": {
           "impact_damage": {
             "damage": {
@@ -66,7 +76,9 @@
     "events": {
       "sw:expire": {
         "add": {
-          "component_groups": ["sw:expired"]
+          "component_groups": [
+            "sw:expired"
+          ]
         }
       }
     }

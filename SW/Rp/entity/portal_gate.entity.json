@@ -1,0 +1,27 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "sw:portal_gate",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/ring_portal"
+      },
+      "geometry": {
+        "default": "geometry.sw_ring_shot"
+      },
+      "render_controllers": ["controller.render.sw_glow"],
+      "animations": {
+        "life": "animation.sw_portal_gate.life"
+      },
+      "scripts": {
+        "animate": ["life"]
+      },
+      "particle_effects": {
+        "swirl": "sw:charge_portal"
+      }
+    }
+  }
+}

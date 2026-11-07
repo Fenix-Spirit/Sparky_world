@@ -1,0 +1,74 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.sw_ring_shot.flying": {
+      "loop": true,
+      "animation_length": 0.4,
+      "bones": {
+        "root": {
+          "rotation": [
+            "math.sin(q.life_time * 240) * 14",
+            0,
+            "math.cos(q.life_time * 240) * 14"
+          ],
+          "scale": "math.min(1, 0.6 + q.life_time * 5) * math.clamp(1 - v.fade / 0.5, 0.01, 1)"
+        },
+        "band": {
+          "rotation": [
+            0,
+            "q.life_time * 540",
+            0
+          ]
+        },
+        "energy": {
+          "rotation": [
+            0,
+            "q.life_time * -900",
+            0
+          ],
+          "scale": "0.92 + math.sin(q.life_time * 1400) * 0.08"
+        }
+      },
+      "particle_effects": {
+        "0.0": {
+          "effect": "trail",
+          "locator": "core"
+        }
+      }
+    },
+    "animation.sw_portal_gate.life": {
+      "loop": true,
+      "animation_length": 0.4,
+      "bones": {
+        "root": {
+          "rotation": [
+            90,
+            "q.life_time * 70",
+            0
+          ],
+          "scale": "math.min(1.7, 0.2 + q.life_time * 5)"
+        },
+        "band": {
+          "rotation": [
+            0,
+            "q.life_time * 120",
+            0
+          ]
+        },
+        "energy": {
+          "rotation": [
+            0,
+            "q.life_time * -260",
+            0
+          ]
+        }
+      },
+      "particle_effects": {
+        "0.0": {
+          "effect": "swirl",
+          "locator": "core"
+        }
+      }
+    }
+  }
+}

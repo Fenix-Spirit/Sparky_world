@@ -16,24 +16,44 @@
       "materials": {
         "default": "entity_alphatest"
       },
-      "render_controllers": ["controller.render.sparky"],
+      "render_controllers": [
+        "controller.render.sparky"
+      ],
       "animations": {
         "idle": "animation.sparky.idle",
         "walk": "animation.sparky.walk",
+        "run": "animation.sparky.run",
         "look_at_target": "animation.sparky.look_at_target",
         "rings_hold": "animation.sparky.rings_hold",
+        "rings_guard": "animation.sparky.rings_guard",
         "spheres_hold": "animation.sparky.spheres_hold",
+        "guard": "animation.sparky.guard",
         "to_spheres": "animation.sparky.to_spheres",
         "to_rings": "animation.sparky.to_rings",
         "charge_bolt": "animation.sparky.charge_bolt",
         "punch": "animation.sparky.punch",
+        "punch_l": "animation.sparky.punch_l",
+        "uppercut": "animation.sparky.uppercut",
         "throw": "animation.sparky.throw",
         "trap_cast": "animation.sparky.trap_cast",
         "roar": "animation.sparky.roar",
         "rage_idle": "animation.sparky.rage_idle",
-        "general": "controller.animation.sparky.general",
+        "jump_rise": "animation.sparky.jump_rise",
+        "jump_fall": "animation.sparky.jump_fall",
+        "land": "animation.sparky.land",
+        "swim": "animation.sparky.swim",
+        "smash_leap": "animation.sparky.smash_leap",
+        "smash_fall": "animation.sparky.smash_fall",
+        "smash_slam": "animation.sparky.smash_slam",
+        "hurt": "animation.sparky.hurt",
+        "die": "animation.sparky.die",
+        "fidget": "animation.sparky.fidget",
         "form": "controller.animation.sparky.form",
-        "attack_controller": "controller.animation.sparky.attack"
+        "attack_controller": "controller.animation.sparky.attack",
+        "mood": "controller.animation.sparky.mood",
+        "reaction": "controller.animation.sparky.reaction",
+        "landing": "controller.animation.sparky.landing",
+        "fidget_controller": "controller.animation.sparky.fidget"
       },
       "scripts": {
         "pre_animation": [
@@ -41,18 +61,62 @@
           "v.phase = q.property('sw:phase');",
           "v.form = q.property('sw:form');",
           "v.skill = q.property('sw:skill');",
+          "v.power = q.property('sw:power');",
+          "v.smash = q.property('sw:smash');",
           "v.is_rage = v.phase == 'rage';",
-          "v.is_transition = v.phase == 'transition';"
+          "v.is_transition = v.phase == 'transition';",
+          "v.dt = math.min(q.delta_time, 0.1);",
+          "v.stride = q.modified_distance_moved * 38.17;",
+          "v.attacking = q.is_delayed_attacking || q.is_charged || q.is_roaring || v.smash != 'none';",
+          "v.fight = (v.fight ?? 0) + ((q.has_target ? 1 : 0) - (v.fight ?? 0)) * math.min(1, v.dt * 8);",
+          "v.att = (v.att ?? 0) + ((v.attacking ? 1 : 0) - (v.att ?? 0)) * math.min(1, v.dt * 14);",
+          "v.in_water = q.is_in_water && !q.is_on_ground;",
+          "v.water = (v.water ?? 0) + ((v.in_water ? 1 : 0) - (v.water ?? 0)) * math.min(1, v.dt * 6);",
+          "v.air = (v.air ?? 0) + ((q.is_on_ground || v.in_water ? 0 : 1) - (v.air ?? 0)) * math.min(1, v.dt * 12);",
+          "v.rise = (v.rise ?? 0) + ((q.vertical_speed >= 0 ? 1 : 0) - (v.rise ?? 0)) * math.min(1, v.dt * 10);",
+          "v.run = (v.run ?? 0) + (((q.has_target || v.is_rage) && q.ground_speed > 0.3 ? 1 : 0) - (v.run ?? 0)) * math.min(1, v.dt * 8);",
+          "v.move = (v.move ?? 0) + (math.clamp(q.ground_speed, 0, 1) - (v.move ?? 0)) * math.min(1, v.dt * 10);",
+          "v.w_walk = v.move * (1 - v.run) * (1 - v.air) * (1 - v.water);",
+          "v.w_run = v.move * v.run * (1 - v.air) * (1 - v.water);",
+          "v.w_rise = v.smash == 'none' ? v.air * v.rise : 0;",
+          "v.w_fall = v.smash == 'none' ? v.air * (1 - v.rise) : 0;"
         ],
-        "animate": ["general", "form", "attack_controller"]
+        "animate": [
+          "idle",
+          {
+            "walk": "v.w_walk"
+          },
+          {
+            "run": "v.w_run"
+          },
+          {
+            "jump_rise": "v.w_rise"
+          },
+          {
+            "jump_fall": "v.w_fall"
+          },
+          {
+            "swim": "v.water"
+          },
+          "look_at_target",
+          "form",
+          "attack_controller",
+          "mood",
+          "reaction",
+          "landing",
+          "fidget_controller"
+        ]
       },
       "particle_effects": {
         "spark_burst": "sw:spark_burst",
         "rage_spark": "sw:rage_spark",
-        "charge": "sw:charge"
+        "charge": "sw:charge",
+        "eye_aura": "sw:eye_aura",
+        "charge_fire": "sw:charge_fire",
+        "charge_portal": "sw:charge_portal"
       },
       "sound_effects": {
-        "transform": "mob.breeze.whirl"
+        "transform": "respawn_anchor.charge"
       },
       "enable_attachables": true,
       "held_item_ignores_lighting": true,

@@ -1,47 +1,19 @@
 {
   "format_version": "1.10.0",
   "animation_controllers": {
-    "controller.animation.sparky.general": {
-      "initial_state": "calm",
-      "states": {
-        "calm": {
-          "animations": [
-            "idle",
-            {
-              "walk": "q.modified_move_speed"
-            },
-            "look_at_target"
-          ],
-          "transitions": [
-            {
-              "rage": "v.is_rage"
-            }
-          ],
-          "blend_transition": 0.25
-        },
-        "rage": {
-          "animations": [
-            "rage_idle",
-            {
-              "walk": "q.modified_move_speed"
-            },
-            "look_at_target"
-          ],
-          "transitions": [
-            {
-              "calm": "!v.is_rage"
-            }
-          ],
-          "blend_transition": 0.25
-        }
-      }
-    },
     "controller.animation.sparky.form": {
       "initial_state": "rings",
       "states": {
         "rings": {
-          "animations": ["rings_hold"],
-          "on_entry": ["v.show_spheres = 0;"],
+          "animations": [
+            "rings_hold",
+            {
+              "rings_guard": "v.fight * (1 - v.att) * (1 - v.water)"
+            }
+          ],
+          "on_entry": [
+            "v.show_spheres = 0;"
+          ],
           "transitions": [
             {
               "to_spheres": "v.form == 'to_spheres'"
@@ -50,10 +22,13 @@
               "spheres": "v.form == 'spheres'"
             }
           ],
-          "blend_transition": 0.15
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
         },
         "to_spheres": {
-          "animations": ["to_spheres"],
+          "animations": [
+            "to_spheres"
+          ],
           "transitions": [
             {
               "spheres": "v.form == 'spheres'"
@@ -62,11 +37,20 @@
               "rings": "v.form == 'rings'"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.15
         },
         "spheres": {
-          "animations": ["spheres_hold"],
-          "on_entry": ["v.show_spheres = 1;"],
+          "animations": [
+            {
+              "spheres_hold": "(1 - v.fight) * (1 - v.att)"
+            },
+            {
+              "guard": "v.fight * (1 - v.att) * (1 - v.water)"
+            }
+          ],
+          "on_entry": [
+            "v.show_spheres = 1;"
+          ],
           "transitions": [
             {
               "to_rings": "v.form == 'to_rings'"
@@ -75,10 +59,12 @@
               "rings": "v.form == 'rings'"
             }
           ],
-          "blend_transition": 0.15
+          "blend_transition": 0.2
         },
         "to_rings": {
-          "animations": ["to_rings"],
+          "animations": [
+            "to_rings"
+          ],
           "transitions": [
             {
               "rings": "v.form == 'rings'"
@@ -87,7 +73,7 @@
               "spheres": "v.form == 'spheres'"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.15
         }
       }
     },
@@ -100,10 +86,25 @@
               "roar": "q.is_roaring"
             },
             {
+              "smash_leap": "v.smash == 'leap'"
+            },
+            {
+              "smash_fall": "v.smash == 'fall'"
+            },
+            {
+              "smash_slam": "v.smash == 'slam'"
+            },
+            {
               "melee": "q.is_delayed_attacking"
             },
             {
-              "shoot_bolt": "q.is_charged && !v.show_spheres"
+              "shoot_bolt": "q.is_charged && !v.show_spheres && v.power == 'lightning'"
+            },
+            {
+              "shoot_fire": "q.is_charged && !v.show_spheres && v.power == 'fire'"
+            },
+            {
+              "shoot_portal": "q.is_charged && !v.show_spheres && v.power == 'portal'"
             },
             {
               "shoot_trap": "q.is_charged && v.show_spheres && v.skill == 'trap'"
@@ -111,10 +112,13 @@
             {
               "shoot_throw": "q.is_charged && v.show_spheres"
             }
-          ]
+          ],
+          "blend_transition": 0.12
         },
         "roar": {
-          "animations": ["roar"],
+          "animations": [
+            "roar"
+          ],
           "particle_effects": [
             {
               "effect": "spark_burst",
@@ -126,19 +130,34 @@
               "default": "!q.is_roaring"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.25
         },
         "melee": {
-          "animations": ["punch"],
+          "on_entry": [
+            "v.combo = math.mod((v.combo ?? 0) + 1, 3);"
+          ],
+          "animations": [
+            {
+              "punch": "v.combo == 1"
+            },
+            {
+              "punch_l": "v.combo == 2"
+            },
+            {
+              "uppercut": "v.combo == 0"
+            }
+          ],
           "transitions": [
             {
               "default": "!q.is_delayed_attacking"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.18
         },
         "shoot_bolt": {
-          "animations": ["charge_bolt"],
+          "animations": [
+            "charge_bolt"
+          ],
           "particle_effects": [
             {
               "effect": "charge",
@@ -154,19 +173,24 @@
               "default": "!q.is_charged"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
         },
         "shoot_throw": {
-          "animations": ["throw"],
+          "animations": [
+            "throw"
+          ],
           "transitions": [
             {
               "default": "!q.is_charged"
             }
           ],
-          "blend_transition": 0.1
+          "blend_transition": 0.2
         },
         "shoot_trap": {
-          "animations": ["trap_cast"],
+          "animations": [
+            "trap_cast"
+          ],
           "particle_effects": [
             {
               "effect": "charge",
@@ -182,7 +206,221 @@
               "default": "!q.is_charged"
             }
           ],
+          "blend_transition": 0.2
+        },
+        "shoot_fire": {
+          "animations": [
+            "charge_bolt"
+          ],
+          "particle_effects": [
+            {
+              "effect": "charge_fire",
+              "locator": "spark_r"
+            },
+            {
+              "effect": "charge_fire",
+              "locator": "spark_l"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_charged"
+            }
+          ],
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
+        },
+        "shoot_portal": {
+          "animations": [
+            "charge_bolt"
+          ],
+          "particle_effects": [
+            {
+              "effect": "charge_portal",
+              "locator": "spark_r"
+            },
+            {
+              "effect": "charge_portal",
+              "locator": "spark_l"
+            }
+          ],
+          "transitions": [
+            {
+              "default": "!q.is_charged"
+            }
+          ],
+          "blend_transition": 0.2,
+          "blend_via_shortest_path": true
+        },
+        "smash_leap": {
+          "animations": [
+            "smash_leap"
+          ],
+          "transitions": [
+            {
+              "smash_fall": "v.smash == 'fall'"
+            },
+            {
+              "smash_slam": "v.smash == 'slam'"
+            },
+            {
+              "default": "v.smash == 'none'"
+            }
+          ],
+          "blend_transition": 0.12
+        },
+        "smash_fall": {
+          "animations": [
+            "smash_fall"
+          ],
+          "transitions": [
+            {
+              "smash_slam": "v.smash == 'slam'"
+            },
+            {
+              "default": "v.smash == 'none'"
+            }
+          ],
+          "blend_transition": 0.05
+        },
+        "smash_slam": {
+          "animations": [
+            "smash_slam"
+          ],
+          "transitions": [
+            {
+              "smash_leap": "v.smash == 'leap'"
+            },
+            {
+              "default": "v.smash == 'none'"
+            }
+          ],
+          "blend_transition": 0.25
+        }
+      }
+    },
+    "controller.animation.sparky.mood": {
+      "initial_state": "calm",
+      "states": {
+        "calm": {
+          "transitions": [
+            {
+              "rage": "v.is_rage"
+            }
+          ],
+          "blend_transition": 0.25
+        },
+        "rage": {
+          "animations": [
+            "rage_idle"
+          ],
+          "transitions": [
+            {
+              "calm": "!v.is_rage"
+            }
+          ],
+          "blend_transition": 0.25
+        }
+      }
+    },
+    "controller.animation.sparky.reaction": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "die": "!q.is_alive"
+            },
+            {
+              "hurt": "q.hurt_time > 0"
+            }
+          ],
+          "blend_transition": 0.06
+        },
+        "hurt": {
+          "animations": [
+            "hurt"
+          ],
+          "transitions": [
+            {
+              "die": "!q.is_alive"
+            },
+            {
+              "default": "q.all_animations_finished && q.hurt_time <= 0"
+            }
+          ],
+          "blend_transition": 0.15
+        },
+        "die": {
+          "animations": [
+            "die"
+          ],
+          "blend_transition": 0.08
+        }
+      }
+    },
+    "controller.animation.sparky.landing": {
+      "initial_state": "ground",
+      "states": {
+        "ground": {
+          "transitions": [
+            {
+              "air": "v.air > 0.5"
+            }
+          ],
           "blend_transition": 0.1
+        },
+        "air": {
+          "transitions": [
+            {
+              "land": "q.is_on_ground && v.smash == 'none'"
+            },
+            {
+              "ground": "v.water > 0.5 || (q.is_on_ground && v.smash != 'none')"
+            }
+          ],
+          "blend_transition": 0.06
+        },
+        "land": {
+          "animations": [
+            "land"
+          ],
+          "transitions": [
+            {
+              "air": "v.air > 0.5"
+            },
+            {
+              "ground": "q.all_animations_finished"
+            }
+          ],
+          "blend_transition": 0.15
+        }
+      }
+    },
+    "controller.animation.sparky.fidget": {
+      "initial_state": "wait",
+      "states": {
+        "wait": {
+          "transitions": [
+            {
+              "fidget": "q.life_time > (v.next_fidget ?? 12) && q.ground_speed < 0.1 && !q.has_target && q.is_on_ground"
+            }
+          ],
+          "blend_transition": 0.3
+        },
+        "fidget": {
+          "animations": [
+            "fidget"
+          ],
+          "on_exit": [
+            "v.next_fidget = q.life_time + math.random(12, 25);"
+          ],
+          "transitions": [
+            {
+              "wait": "q.all_animations_finished || q.has_target || q.ground_speed > 0.5"
+            }
+          ],
+          "blend_transition": 0.3
         }
       }
     }

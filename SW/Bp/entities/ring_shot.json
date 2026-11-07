@@ -2,31 +2,55 @@
   "format_version": "1.21.90",
   "minecraft:entity": {
     "description": {
-      "identifier": "sw:spark_bolt",
+      "identifier": "sw:ring_shot",
       "is_spawnable": false,
-      "is_summonable": true
+      "is_summonable": true,
+      "properties": {
+        "sw:fading": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        }
+      }
     },
     "component_groups": {
       "sw:expired": {
         "minecraft:instant_despawn": {}
+      },
+      "sw:fading": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.5,
+          "time_down_event": {
+            "event": "sw:expire"
+          }
+        }
       }
     },
     "components": {
       "minecraft:collision_box": {
-        "width": 0.3,
-        "height": 0.3
+        "width": 0.6,
+        "height": 0.6
       },
       "minecraft:projectile": {
-        "anchor": "middle",
-        "offset": [0, 0.6, 0],
-        "power": 1.2,
-        "gravity": 0.0,
-        "inertia": 1.0,
-        "liquid_inertia": 1.0,
-        "uncertainty_base": 6.0,
-        "uncertainty_multiplier": 2.0,
+        "anchor": "eye_height",
+        "offset": [
+          0,
+          -0.1,
+          0
+        ],
+        "power": 1.5,
+        "gravity": 0.03,
+        "inertia": 0.99,
+        "liquid_inertia": 0.8,
+        "uncertainty_base": 2.0,
+        "uncertainty_multiplier": 0.5,
         "isolated_physics": false,
-        "ignored_entities": ["sw:spark_bolt"],
+        "ignored_entities": [
+          "sw:ring_shot",
+          "sw:ring_fire",
+          "sw:ring_portal"
+        ],
         "on_hit": {
           "impact_damage": {
             "damage": {
@@ -35,17 +59,6 @@
             },
             "knockback": true,
             "apply_knockback_to_blocking_targets": true
-          },
-          "mob_effect": {
-            "effects": [
-              {
-                "effect": "slowness",
-                "amplifier": 1,
-                "durationeasy": 20,
-                "durationnormal": 40,
-                "durationhard": 60
-              }
-            ]
           },
           "particle_on_hit": {
             "particle_type": "electricspark",
@@ -65,7 +78,7 @@
         "looping": false,
         "time": 8,
         "time_down_event": {
-          "event": "sw:expire"
+          "event": "sw:fade"
         }
       },
       "minecraft:conditional_bandwidth_optimization": {
@@ -74,12 +87,31 @@
           "max_dropped_ticks": 7,
           "use_motion_prediction_hints": true
         }
+      },
+      "minecraft:type_family": {
+        "family": [
+          "sw_ring",
+          "sparky",
+          "inanimate"
+        ]
       }
     },
     "events": {
       "sw:expire": {
         "add": {
-          "component_groups": ["sw:expired"]
+          "component_groups": [
+            "sw:expired"
+          ]
+        }
+      },
+      "sw:fade": {
+        "set_property": {
+          "sw:fading": true
+        },
+        "add": {
+          "component_groups": [
+            "sw:fading"
+          ]
         }
       }
     }

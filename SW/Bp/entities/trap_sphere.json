@@ -17,14 +17,14 @@
         "height": 0.4
       },
       "minecraft:projectile": {
-        "anchor": "middle",
+        "anchor": "eye_height",
         "offset": [
           0,
-          0.4,
+          -0.1,
           0
         ],
-        "power": 1.3,
-        "gravity": 0.0,
+        "power": 1.5,
+        "gravity": 0.03,
         "inertia": 1.0,
         "liquid_inertia": 1.0,
         "uncertainty_base": 1.0,
@@ -32,9 +32,11 @@
         "isolated_physics": false,
         "ignored_entities": [
           "sw:sphere_shot",
-          "sw:spark_bolt",
+          "sw:ring_shot",
           "sw:trap_sphere",
-          "sw:crush_cage"
+          "sw:crush_cage",
+          "sw:ring_fire",
+          "sw:ring_portal"
         ],
         "on_hit": {
           "impact_damage": {
@@ -55,13 +57,8 @@
               }
             ]
           },
-          "spawn_chance": {
-            "first_spawn_chance": 1.0,
-            "first_spawn_count": 1,
-            "spawn_definition": "sw:crush_cage"
-          },
           "particle_on_hit": {
-            "particle_type": "electricspark",
+            "particle_type": "crit",
             "num_particles": 12,
             "on_entity_hit": true,
             "on_other_hit": true
@@ -87,6 +84,13 @@
           "max_dropped_ticks": 7,
           "use_motion_prediction_hints": true
         }
+      },
+      "minecraft:type_family": {
+        "family": [
+          "sw_ring",
+          "sparky",
+          "inanimate"
+        ]
       }
     },
     "events": {

@@ -13,11 +13,14 @@
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["sparky", "inanimate"]
+        "family": [
+          "sparky",
+          "inanimate"
+        ]
       },
       "minecraft:collision_box": {
-        "width": 1.6,
-        "height": 1.6
+        "width": 0.1,
+        "height": 0.1
       },
       "minecraft:physics": {
         "has_gravity": false,
@@ -43,28 +46,6 @@
         "is_pushable_by_piston": false
       },
       "minecraft:fire_immune": {},
-      "minecraft:area_attack": {
-        "damage_range": 1.4,
-        "damage_per_tick": 2,
-        "damage_cooldown": 0.4,
-        "cause": "entity_attack",
-        "entity_filter": {
-          "all_of": [
-            {
-              "test": "is_family",
-              "subject": "other",
-              "operator": "!=",
-              "value": "sparky"
-            },
-            {
-              "test": "is_family",
-              "subject": "other",
-              "operator": "!=",
-              "value": "inanimate"
-            }
-          ]
-        }
-      },
       "minecraft:timer": {
         "looping": false,
         "time": 2.45,
@@ -76,7 +57,9 @@
     "events": {
       "sw:shatter": {
         "add": {
-          "component_groups": ["sw:gone"]
+          "component_groups": [
+            "sw:gone"
+          ]
         }
       }
     }

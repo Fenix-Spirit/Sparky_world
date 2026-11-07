@@ -4,20 +4,24 @@
     "description": {
       "identifier": "sw:trap_sphere",
       "materials": {
-        "default": "snowball"
+        "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/entity/trap_sphere"
+        "default": "textures/entity/sparky_texture"
       },
       "geometry": {
-        "default": "geometry.item_sprite"
+        "default": "geometry.sw_sphere_shot"
       },
-      "render_controllers": ["controller.render.item_sprite"],
+      "render_controllers": [
+        "controller.render.sw_simple"
+      ],
       "animations": {
-        "flying": "animation.actor.billboard"
+        "flying": "animation.sw_sphere_shot.flying"
       },
       "scripts": {
-        "animate": ["flying"]
+        "animate": [
+          "flying"
+        ]
       }
     }
   }

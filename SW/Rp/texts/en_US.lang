@@ -1,9 +1,12 @@
 pack.name=Sparky World - RP
-pack.description=Resources for Sparky, the crowned spark boss.
+pack.description=Resources for Sparky, the crowned spark boss. (v0.4.16)
 entity.sw:sparky.name=Sparky
-entity.sw:spark_bolt.name=Spark Bolt
+entity.sw:ring_shot.name=Sparky Ring
 item.spawn_egg.entity.sw:sparky.name=Sparky Spawn Egg
 sw.sparky.rage=§6⚡ §eSparky entered RAGE MODE! §6⚡
 entity.sw:sphere_shot.name=Sparky Sphere
 entity.sw:trap_sphere.name=Trap Sphere
 entity.sw:crush_cage.name=Crushing Sphere
+entity.sw:ring_fire.name=Fire Ring
+entity.sw:ring_portal.name=Portal Ring
+entity.sw:portal_gate.name=Sparky Portal

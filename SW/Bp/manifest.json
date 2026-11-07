@@ -4,25 +4,59 @@
     "name": "pack.name",
     "description": "pack.description",
     "uuid": "248c70de-820c-495e-bc84-88f1399eeb15",
-    "min_engine_version": [1, 21, 90],
-    "version": [0, 3, 0]
+    "min_engine_version": [
+      1,
+      21,
+      90
+    ],
+    "version": [
+      0,
+      4,
+      16
+    ]
   },
   "modules": [
     {
       "description": "behavior",
       "type": "data",
       "uuid": "01018579-0327-442c-8f64-604c08a534b0",
-      "version": [0, 3, 0]
+      "version": [
+        0,
+        4,
+        16
+      ]
+    },
+    {
+      "description": "rings",
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/rings.js",
+      "uuid": "934ef62e-a2ae-4e4e-8165-a2c261ec8b11",
+      "version": [
+        1,
+        0,
+        0
+      ]
     }
   ],
   "dependencies": [
     {
       "uuid": "a201b14f-4760-4fe0-b819-e0e03b37336d",
-      "version": [0, 3, 0]
+      "version": [
+        0,
+        4,
+        16
+      ]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.0.0"
     }
   ],
   "metadata": {
-    "authors": ["FénixSpirit"],
+    "authors": [
+      "FénixSpirit"
+    ],
     "product_type": "addon"
   }
 }
